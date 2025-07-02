@@ -20,14 +20,15 @@ console.log("The CPU Chose:", computerChoice);
 
 //create a prompt to allow user to input answer and a function that returns a valid input
 function getHumanChoice() {
-    const input = prompt("Rock, Paper, or Scissors?");
-
+    let input = prompt("Rock, Paper, or Scissors?");
+    //normalize inputs to be case insensitive
+    input = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
     //user answer should return into a valid answer
-    if (input == "rock") {
+    if (input == "Rock") {
         return "Rock";
-    } else if (input == "paper") {
+    } else if (input == "Paper") {
         return "Paper";
-    } else if (input == "scissors") {
+    } else if (input == "Scissors") {
         return "Scissors"
     }
 }
@@ -35,3 +36,37 @@ function getHumanChoice() {
 // create a variable to return the functions answer and relay the answer to console.log (calls the prompt to appear)
 const humanChoice = getHumanChoice();
 console.log("You chose:", humanChoice);
+
+// create a function to take choices, play round
+function playRound(humanChoice, computerChoice) {
+    if (humanChoice == computerChoice) {
+        return "Tie"
+    }  if (
+        (humanChoice === "Rock" && computerChoice === "Scissors") ||
+        (humanChoice === "Paper" && computerChoice === "Rock") ||
+        (humanChoice === "Scissors" && computerChoice === "Paper")) {
+        return "You Win!";
+    } else {
+        return "Computer Wins!";
+    }
+}
+
+console.log(playRound(humanChoice, computerChoice))
+
+// write variables to keep track of the players score in global scope, initialize at 0
+let humanScore = 0
+let computerScore = 0
+//write a function to incrementally increase score, use a variable to recognize winner and ++ to add score
+function score() {
+    const result = playRound(humanChoice, computerChoice)
+
+    if (result == "You Win!") {
+        humanScore++
+    } else if (result == "Computer Wins!") {
+        computerScore++
+    }
+}
+score();
+
+
+console.log("The Score is", humanScore, "to the User &", computerScore, "to the CPU.")
