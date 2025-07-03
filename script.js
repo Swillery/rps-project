@@ -1,6 +1,6 @@
 // (create a function for getComputerChoice -  Write the code so that getComputerChoice will randomly return one of the following string values: “rock”, “paper” or “scissors”.)
 
-// create a const to generate an integer 1-100 (randomNumber)
+// create a function to generate an integer 1-100 (randomNumber) and allocate numbers to inputs (computers input)
 function getComputerChoice() {
     const randomNumber = Math.floor(Math.random() * 100) + 1;
 
@@ -14,30 +14,20 @@ function getComputerChoice() {
     }
 }
 
-// create a variable to return the functions answer and relay the answer to console.log
-const computerChoice = getComputerChoice();
-console.log("The CPU Chose:", computerChoice);
 
-//create a prompt to allow user to input answer and a function that returns a valid input
+
+//create a function to prompt user to input answer
 function getHumanChoice() {
     let input = prompt("Rock, Paper, or Scissors?");
     //normalize inputs to be case insensitive
     input = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
-    //user answer should return into a valid answer
-    if (input == "Rock") {
-        return "Rock";
-    } else if (input == "Paper") {
-        return "Paper";
-    } else if (input == "Scissors") {
-        return "Scissors"
+    //therefor user answer should return into a "valid" answer
+     if (input === "Rock" || input === "Paper" || input === "Scissors") {
+        return input;
     }
 }
 
-// create a variable to return the functions answer and relay the answer to console.log (calls the prompt to appear)
-const humanChoice = getHumanChoice();
-console.log("You chose:", humanChoice);
-
-// create a function to take choices, play round
+// create a function to take choices & decide winner
 function playRound(humanChoice, computerChoice) {
     if (humanChoice == computerChoice) {
         return "Tie"
@@ -51,22 +41,26 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-console.log(playRound(humanChoice, computerChoice))
-
-// write variables to keep track of the players score in global scope, initialize at 0
+// initialize score at 0
 let humanScore = 0
 let computerScore = 0
-//write a function to incrementally increase score, use a variable to recognize winner and ++ to add score
-function score() {
+
+//write a loop to play 5 rounds
+for (let round = 1; round <= 5; round++) {
+    const computerChoice = getComputerChoice();
+    const humanChoice = getHumanChoice();
+    
+    console.log("The CPU Chose:", computerChoice);
+    console.log("You chose:", humanChoice);
+
     const result = playRound(humanChoice, computerChoice)
+    console.log(result);
 
-    if (result == "You Win!") {
-        humanScore++
-    } else if (result == "Computer Wins!") {
-        computerScore++
+        if (result == "You Win!") {
+            humanScore++
+        } else if (result == "Computer Wins!") {
+            computerScore++
+        }
+
+        console.log("The Score is", humanScore, "to the User &", computerScore, "to the CPU.")
     }
-}
-score();
-
-
-console.log("The Score is", humanScore, "to the User &", computerScore, "to the CPU.")
