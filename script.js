@@ -42,25 +42,33 @@ function playRound(humanChoice, computerChoice) {
 }
 
 // initialize score at 0
-let humanScore = 0
-let computerScore = 0
+let humanScore = 0;
+let computerScore = 0;
 
-//write a loop to play 5 rounds
-for (let round = 1; round <= 5; round++) {
-    const computerChoice = getComputerChoice();
-    const humanChoice = getHumanChoice();
-    
-    console.log("The CPU Chose:", computerChoice);
-    console.log("You chose:", humanChoice);
+const options = document.querySelectorAll(".option");
 
-    const result = playRound(humanChoice, computerChoice)
-    console.log(result);
+options.forEach(option => {
+    option.addEventListener('click', function () {
+        const humanChoice = this.getAttribute('data-name');
+        const computerChoice = getComputerChoice();
+        const result = playRound(humanChoice, computerChoice);
 
-        if (result == "You Win!") {
-            humanScore++
-        } else if (result == "Computer Wins!") {
-            computerScore++
+        if (result === "You Win!") {
+            humanScore++;
+        } else if (result === "Computer Wins!") {
+            computerScore++;
         }
 
-        console.log("The Score is", humanScore, "to the User &", computerScore, "to the CPU.")
-    }
+        document.getElementById('result').innerText = 
+            `You chose ${humanChoice}. The CPU chose ${computerChoice}. ${result} 
+             The score is now ${humanScore} to ${computerScore}.`;
+
+        if (humanScore === 5) {
+            document.getElementById('result').innerText = `You chose ${humanChoice}. The CPU chose ${computerChoice}. ${result} 
+             The score is now ${humanScore} to ${computerScore}.You won the game. Congrats! Please refresh the page.`
+        }    else if (computerScore === 5) {
+            document.getElementById('result').innerText = `You chose ${humanChoice}. The CPU chose ${computerChoice}. ${result} 
+             The score is now ${humanScore} to ${computerScore}.You lost the game. Sorry! Please refresh the page.`
+            }
+        })
+    });
